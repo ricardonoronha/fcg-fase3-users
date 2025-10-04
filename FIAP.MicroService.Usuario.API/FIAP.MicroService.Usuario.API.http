@@ -1,0 +1,6 @@
+@FIAP.MicroService.Usuario.API_HostAddress = http://localhost:5108
+
+GET {{FIAP.MicroService.Usuario.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

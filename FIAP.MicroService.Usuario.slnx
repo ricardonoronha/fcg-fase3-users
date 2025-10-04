@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/FIAP.MicroService.Usuario.API/">
+    <Project Path="FIAP.MicroService.Usuario.API/FIAP.MicroService.Usuario.API.csproj" />
+  </Folder>
+  <Folder Name="/FIAP.MicroService.Usuario.Dominio/">
+    <Project Path="FIAP.MicroService.Usuario.Dominio/FIAP.MicroService.Usuario.Dominio.csproj" />
+  </Folder>
+  <Folder Name="/FIAP.MicroService.Usuario.Infraestrutura/">
+    <Project Path="FIAP.MicroService.Usuario.Infraestrutura/FIAP.MicroService.Usuario.Infraestrutura.csproj" />
+  </Folder>
+  <Folder Name="/FIAP.MicroService.Usuario.Teste/">
+    <Project Path="FIAP.MicroService.Usuario.Teste/FIAP.MicroService.Usuario.Teste.csproj" />
+  </Folder>
+</Solution>
