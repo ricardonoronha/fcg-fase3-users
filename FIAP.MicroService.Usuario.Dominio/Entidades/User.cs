@@ -2,7 +2,7 @@
 
 namespace FIAP.MicroService.Usuario.Dominio.Entidades;
 
-public class User : IEntidadeBase
+public class IUserRepository : IEntidadeBase
 {
     public Guid Id { get; set; }
     public DateTime DataCriacao { get; set; }

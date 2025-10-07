@@ -4,5 +4,5 @@ namespace FIAP.MicroService.Usuario.Dominio.Interfaces;
 
 public interface ITokenService
 {
-    string GenerateToken(User user);
+    string GenerateToken(Entidades.IUserRepository user);
 }
