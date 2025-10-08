@@ -1,10 +1,14 @@
 using FIAP.MicroService.Usuario.Dominio.Interfaces;
+using FIAP.MicroService.Usuario.Infraestrutura.Data;
 using FIAP.MicroService.Usuario.Infraestrutura.Repositories;
 using FIAP.MicroService.Usuario.Infraestrutura.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +16,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+// - connectionString
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("A string de conexão 'DefaultConnection' não foi encontrada no appsettings.json ou está vazia.");
+}
+
+builder.Services.AddDbContext<FIAP.MicroService.Usuario.Infraestrutura.Data.UserDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
 // Registro dos serviços que NÓS CRIAMOS
-builder.Services.AddSingleton<IUserRepository, MockUserRepository>();
+builder.Services.AddSingleton<IUserRepository, FIAP.MicroService.Usuario.Infraestrutura.Repositories.UserDbContext>();
+
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 // Registro do AutoMapper

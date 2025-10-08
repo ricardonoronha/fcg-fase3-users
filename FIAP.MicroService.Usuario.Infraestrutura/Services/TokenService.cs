@@ -17,7 +17,7 @@ public class TokenService : ITokenService
         _configuration = configuration;
     }
 
-    public string GenerateToken(User user)
+    public string GenerateToken(Dominio.Entidades.IUserRepository user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
 
