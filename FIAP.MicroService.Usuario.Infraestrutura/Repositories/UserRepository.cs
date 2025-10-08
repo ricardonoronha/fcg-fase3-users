@@ -1,21 +1,29 @@
-﻿using FIAP.MicroService.Usuario.Dominio;
-using FIAP.MicroService.Usuario.Dominio.Entidades;
+﻿using FIAP.MicroService.Usuario.Dominio.Entidades;
 using FIAP.MicroService.Usuario.Dominio.Interfaces;
-using FIAP.MicroService.Usuario.Infraestrutura;
 using FIAP.MicroService.Usuario.Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
-namespace FIAP.MicroService.Jogos.Infraestrutura.Repositories
+// Garanta que o namespace esteja exatamente assim
+namespace FIAP.MicroService.Usuario.Infraestrutura.Repositories;
+
+public class UserRepository : IUserRepository
 {
-    public class UserRepository : Usuario.Dominio.Entidades.IUserRepository
-    {
-        private readonly UserDbContext? _users;
+    private readonly UserDbContext _context;
 
-        public async Task<Usuario.Dominio.Entidades.IUserRepository?> GetByIdAsync(Guid id)
-        {
-            return await _users.Users.FindAsync(id);
-        }
-        
+    public UserRepository(UserDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<User?> GetByIdAsync(Guid id)
+    {
+        return await _context.Users.FindAsync(id);
+    }
+
+    public async Task<User?> FindByUsernameAndPasswordAsync(string username, string password)
+    {
+        // Em um projeto real, a senha seria comparada com um hash
+        return await _context.Users
+            .FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
     }
 }

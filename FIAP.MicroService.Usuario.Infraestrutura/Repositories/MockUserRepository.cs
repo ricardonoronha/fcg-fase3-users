@@ -1,25 +1,28 @@
 using FIAP.MicroService.Usuario.Dominio.Entidades;
 using FIAP.MicroService.Usuario.Dominio.Interfaces;
 
+
 namespace FIAP.MicroService.Usuario.Infraestrutura.Repositories;
 
-public class UserDbContext : Dominio.Interfaces.IUserRepository
+public class MockUserRepository : IUserRepository
 {
-    private readonly List<Dominio.Entidades.IUserRepository> _users = new();
+    private readonly List<User> _users = new();
 
-    public UserDbContext()
+    public MockUserRepository()
     {
-        _users.Add(new Dominio.Entidades.IUserRepository { Id = Guid.NewGuid(), Username = "user1", Password = "password1", Email = "user1@email.com", Role = "user", DataCriacao = DateTime.UtcNow });
-        _users.Add(new Dominio.Entidades.IUserRepository { Id = Guid.NewGuid(), Username = "admin", Password = "adminpassword", Email = "admin@email.com", Role = "admin", DataCriacao = DateTime.UtcNow });
+        // Adicionando usuários de exemplo em memória.
+        // Usando o mesmo Guid do seu DbContext para o admin para consistência.
+        _users.Add(new User { Id = Guid.Parse("9f4eb7ce-9c51-42b2-84bd-701cf961ddca"), Username = "admin", Password = "adminpassword", Email = "admin@email.com", Role = "admin" });
+        _users.Add(new User { Id = Guid.NewGuid(), Username = "user1", Password = "password1", Email = "user1@email.com", Role = "user" });
     }
 
-    public Task<Dominio.Entidades.IUserRepository?> GetByIdAsync(Guid id)
+    public Task<User?> GetByIdAsync(Guid id)
     {
         var user = _users.FirstOrDefault(u => u.Id == id);
         return Task.FromResult(user);
     }
 
-    public Task<Dominio.Entidades.IUserRepository?> FindByUsernameAndPasswordAsync(string username, string password)
+    public Task<User?> FindByUsernameAndPasswordAsync(string username, string password)
     {
         var user = _users.SingleOrDefault(u => u.Username == username && u.Password == password);
         return Task.FromResult(user);

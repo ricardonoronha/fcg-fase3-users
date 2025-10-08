@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace FIAP.MicroService.Usuario.Dominio.Validacoes;
 
-public class UserValidator : AbstractValidator<IUserRepository>
+public class UserValidator : AbstractValidator<User>
 {
     public UserValidator()
     {

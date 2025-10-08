@@ -4,6 +4,9 @@ namespace FIAP.MicroService.Usuario.Dominio.Interfaces;
 
 public interface IUserRepository
 {
-    Task<Entidades.IUserRepository?> GetByIdAsync(Guid id);
-    Task<Entidades.IUserRepository?> FindByUsernameAndPasswordAsync(string username, string password);
+    // A interface deve definir que o método retorna uma Task<User?>
+    Task<User?> GetByIdAsync(Guid id);
+
+    // O mesmo para este método
+    Task<User?> FindByUsernameAndPasswordAsync(string username, string password);
 }

@@ -4,5 +4,6 @@ namespace FIAP.MicroService.Usuario.Dominio.Interfaces;
 
 public interface ITokenService
 {
-    string GenerateToken(Entidades.IUserRepository user);
+    // CORREÇÃO: O método deve receber um objeto do tipo 'User'.
+    string GenerateToken(User user);
 }

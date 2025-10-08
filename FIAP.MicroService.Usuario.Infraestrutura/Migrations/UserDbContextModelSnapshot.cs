@@ -3,8 +3,8 @@ using System;
 using FIAP.MicroService.Usuario.Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -18,45 +18,31 @@ namespace FIAP.MicroService.Usuario.Infraestrutura.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("FIAP.MicroService.Usuario.Dominio.Entidades.IUserRepository", b =>
+            modelBuilder.Entity("FIAP.MicroService.Usuario.Dominio.Entidades.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DataAtualizacao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Role")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UsuarioAtualizador")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UsuarioCriador")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -65,27 +51,11 @@ namespace FIAP.MicroService.Usuario.Infraestrutura.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9f4ab7ce-9c51-42b2-86bd-701c9f61ddca"),
-                            DataAtualizacao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataCriacao = new DateTime(2025, 10, 7, 3, 17, 37, 330, DateTimeKind.Utc).AddTicks(6279),
+                            Id = new Guid("9f4eb7ce-9c51-42b2-84bd-701cf961ddca"),
                             Email = "admin@email.com",
                             Password = "adminpassword",
                             Role = "admin",
-                            Username = "admin",
-                            UsuarioAtualizador = "",
-                            UsuarioCriador = ""
-                        },
-                        new
-                        {
-                            Id = new Guid("11111111-9c51-42b2-86bd-701c9f61ddca"),
-                            DataAtualizacao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DataCriacao = new DateTime(2025, 10, 7, 3, 17, 37, 330, DateTimeKind.Utc).AddTicks(6369),
-                            Email = "user1@email.com",
-                            Password = "password1",
-                            Role = "admin",
-                            Username = "user1",
-                            UsuarioAtualizador = "",
-                            UsuarioCriador = ""
+                            Username = "admin"
                         });
                 });
 #pragma warning restore 612, 618
