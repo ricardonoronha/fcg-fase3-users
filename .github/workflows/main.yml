@@ -51,7 +51,7 @@ jobs:
       - name: Build and push image to ECR
         env:
           ECR_REGISTRY: 670769476174.dkr.ecr.sa-east-1.amazonaws.com
-          ECR_REPOSITORY: fcg118-fase3-users
+          ECR_REPOSITORY: fcg-fase3-users
           IMAGE_TAG: ${{ github.run_number }}
         run: |
           # Login no ECR
