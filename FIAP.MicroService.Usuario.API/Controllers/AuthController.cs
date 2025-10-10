@@ -10,11 +10,13 @@ public class AuthController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;
+    private readonly ILogger<AuthController> _logger;
 
-    public AuthController(IUserRepository userRepository, ITokenService tokenService)
+    public AuthController(IUserRepository userRepository, ITokenService tokenService, ILogger<AuthController> logger)
     {
         _userRepository = userRepository;
         _tokenService = tokenService;
+        _logger = logger;
     }
 
     [HttpPost("login")]
@@ -24,11 +26,14 @@ public class AuthController : ControllerBase
         
         if (user == null)
         {
-            // Se o usuário NÃO for encontrado, retorna 401 Unauthorized.
+            _logger.LogInformation("Login inválido realizado | Username: {Username}", loginRequest.Username);
+
             return Unauthorized(new { message = "Usuário ou senha inválidos." });
         }
 
         var token = _tokenService.GenerateToken(user);
+
+        _logger.LogInformation("Login realizado com sucesso | Username: {Username}", loginRequest.Username);
 
         // Se o usuário FOR encontrado, DEVE retornar 200 Ok.
         return Ok(new {
