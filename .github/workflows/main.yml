@@ -72,5 +72,5 @@ jobs:
         run: |
           aws ecs update-service \
             --cluster fcg65 \
-            --service fcg65-service \
+            --service fcg118-fase3-users \
             --force-new-deployment
