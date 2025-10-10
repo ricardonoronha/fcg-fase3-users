@@ -1,21 +1,26 @@
-﻿using FIAP.MicroService.Usuario.Dominio;
 using FIAP.MicroService.Usuario.Dominio.Entidades;
 using FIAP.MicroService.Usuario.Dominio.Interfaces;
-using FIAP.MicroService.Usuario.Infraestrutura;
 using FIAP.MicroService.Usuario.Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
-namespace FIAP.MicroService.Jogos.Infraestrutura.Repositories
+namespace FIAP.MicroService.Usuario.Infraestrutura.Repositories;
+
+public class UserRepository : IUserRepository
 {
-    public class UserRepository : Usuario.Dominio.Entidades.IUserRepository
-    {
-        private readonly UserDbContext? _users;
+    private readonly UserDbContext _dbContext;
 
-        public async Task<Usuario.Dominio.Entidades.IUserRepository?> GetByIdAsync(Guid id)
-        {
-            return await _users.Users.FindAsync(id);
-        }
-        
+    public UserRepository(UserDbContext dbContext)
+    {
+        this._dbContext = dbContext;
+    }
+
+    public async Task<User?> FindByUsernameAndPasswordAsync(string username, string password)
+    {
+       return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(t => string.Equals(username,t.Username) && string.Equals(password, t.Password));
+    }
+
+    public async Task<User?> GetByIdAsync(Guid id)
+    {
+        return await _dbContext.Users.FindAsync(id);
     }
 }

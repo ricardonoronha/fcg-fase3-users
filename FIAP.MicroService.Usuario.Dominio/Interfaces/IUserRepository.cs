@@ -1,9 +1,10 @@
 using FIAP.MicroService.Usuario.Dominio.Entidades;
 
-namespace FIAP.MicroService.Usuario.Dominio.Interfaces;
-
-public interface IUserRepository
+namespace FIAP.MicroService.Usuario.Dominio.Interfaces
 {
-    Task<Entidades.IUserRepository?> GetByIdAsync(Guid id);
-    Task<Entidades.IUserRepository?> FindByUsernameAndPasswordAsync(string username, string password);
+    public interface IUserRepository
+    {
+        Task<User?> GetByIdAsync(Guid id);
+        Task<User?> FindByUsernameAndPasswordAsync(string username, string password);
+    }
 }

@@ -8,6 +8,6 @@ public class UserProfile : Profile
 {
     public UserProfile()
     {
-        CreateMap<IUserRepository, UserResponseDto>();
+        CreateMap<User, UserResponseDto>();
     }
 }

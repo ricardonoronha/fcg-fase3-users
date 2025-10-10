@@ -24,11 +24,11 @@ if (string.IsNullOrEmpty(connectionString))
     throw new InvalidOperationException("A string de conexão 'DefaultConnection' não foi encontrada no appsettings.json ou está vazia.");
 }
 
-builder.Services.AddDbContext<FIAP.MicroService.Usuario.Infraestrutura.Data.UserDbContext>(options =>
+builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 // Registro dos serviços que NÓS CRIAMOS
-builder.Services.AddSingleton<IUserRepository, FIAP.MicroService.Usuario.Infraestrutura.Repositories.UserDbContext>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 

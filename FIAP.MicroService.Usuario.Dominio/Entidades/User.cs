@@ -1,8 +1,7 @@
-﻿using FIAP.MicroService.Usuario.Dominio.Interfaces;
-
+﻿
 namespace FIAP.MicroService.Usuario.Dominio.Entidades;
 
-public class IUserRepository : IEntidadeBase
+public class User
 {
     public Guid Id { get; set; }
     public DateTime DataCriacao { get; set; }
