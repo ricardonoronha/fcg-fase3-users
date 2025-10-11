@@ -8,7 +8,6 @@ namespace FIAP.MicroService.Usuario.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize]
 public class UsersController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
