@@ -1,14 +1,14 @@
+using Serilog;
+using Datadog.Trace;
+using Serilog.Events;
+using RabbitMQ.Client;
+using Microsoft.OpenApi.Models;
+using Datadog.Trace.Configuration;
+using Microsoft.EntityFrameworkCore;
 using FIAP.MicroService.Usuario.Dominio.Interfaces;
 using FIAP.MicroService.Usuario.Infraestrutura.Data;
 using FIAP.MicroService.Usuario.Infraestrutura.Repositories;
 using FIAP.MicroService.Usuario.Infraestrutura.Services;
-using Microsoft.OpenApi.Models;
-using Microsoft.EntityFrameworkCore;
-using Datadog.Trace.Configuration;
-using Datadog.Trace;
-using Serilog;
-using Serilog.Events;
-
 
 var settings = TracerSettings.FromDefaultSources();
 Tracer.Configure(settings);
@@ -41,12 +41,30 @@ builder.Services.AddDbContext<UserDbContext>(options =>
 
 #endregion
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<RabbitMQService>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
+#region RabbitMQ
+
+var rabbitMQ = builder.Configuration.GetSection("RabbitMQConfigurations");
+
+builder.Services.AddSingleton<IConnection>(t =>
+{
+    var factory = new ConnectionFactory()
+    {
+        HostName = rabbitMQ["HostName"],
+        UserName = rabbitMQ["UserName"],
+        Password = rabbitMQ["Password"],
+        ConsumerDispatchConcurrency = 1,
+    };
+
+    return factory.CreateConnectionAsync().GetAwaiter().GetResult();
+});
+
+#endregion
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

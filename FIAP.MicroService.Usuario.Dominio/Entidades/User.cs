@@ -1,5 +1,4 @@
-﻿
-namespace FIAP.MicroService.Usuario.Dominio.Entidades;
+﻿namespace FIAP.MicroService.Usuario.Dominio.Entidades;
 
 public class User
 {
