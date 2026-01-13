@@ -1,6 +1,7 @@
 using AutoMapper;
 using FIAP.MicroService.Usuario.API.DTOs;
 using FIAP.MicroService.Usuario.Dominio.Interfaces;
+using FIAP.MicroService.Usuario.Infraestrutura.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,5 +44,13 @@ public class UsersController : ControllerBase
             return NotFound(new { message = "Usuário não encontrado." });
         }
         return Ok(new { user.Email });
+    }
+
+    [HttpPost("RabbitMQ")]
+    public async Task<IActionResult> PostRabbitMQ([FromServices] RabbitMQService rabbit)
+    {
+        await rabbit.EnviarDados(new { Texto = "Mensagem enviada pelo MicroServico de Usuarios!", Data = DateTime.Now });
+
+        return Ok();
     }
 }
