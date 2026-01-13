@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: users-config
+  namespace: fcg-users
+  labels:
+    app: users
+data:
+
+  ASPNETCORE_ENVIRONMENT: "Production"
+
+  #Logging
+  Logging__LogLevel__Default: "Information"
+  Logging__LogLevel__Microsoft.AspNetCore: "Warning"
+  

@@ -21,7 +21,7 @@ public class TokenService : ITokenService
     {
         var tokenHandler = new JwtSecurityTokenHandler();
 
-        var jwtKey = _configuration["Jwt:Key"];
+        var jwtKey = _configuration["JwtSettings:Key"];
         // Adicionada uma verificação para garantir que a chave não é nula
         ArgumentException.ThrowIfNullOrEmpty(jwtKey);
 
@@ -37,8 +37,8 @@ public class TokenService : ITokenService
             }),
             Expires = DateTime.UtcNow.AddHours(8),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-            Issuer = _configuration["Jwt:Issuer"],
-            Audience = _configuration["Jwt:Audience"]
+            Issuer = _configuration["JwtSettings:Issuer"],
+            Audience = _configuration["JwtSettings:Audience"]
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);

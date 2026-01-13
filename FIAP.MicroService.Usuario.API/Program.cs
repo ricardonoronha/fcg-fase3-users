@@ -54,14 +54,18 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "FIAP.MicroService.Usuario.API", Version = "v1" });
 });
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
-
 app.MapControllers();
 
-app.Run();
+app.MapHealthChecks("/health");
 
+
+
+app.Run();
+        
