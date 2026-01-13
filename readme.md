@@ -1,6 +1,6 @@
 # FIAP TECH CHALLENGE – FASE 4
 
-## Grupo 118
+## Grupo 45
 
 ### Participantes
 
